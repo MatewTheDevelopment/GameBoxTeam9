@@ -6,6 +6,8 @@ public class ParasiteJump : MonoBehaviour
 
     [SerializeField] private float currentTime;
 
+    [SerializeField] private GameObject lineRenderer;
+
     [SerializeField] private LayerMask solidMouse, solidPlayer;
 
     private Ray hit;
@@ -15,6 +17,17 @@ public class ParasiteJump : MonoBehaviour
     private void Update()
     {
         AxisInput();
+
+        hit = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        RaycastHit raycastHit;
+
+        lineRenderer.GetComponent<LineRenderer>().SetPosition(0, transform.position);
+
+        if (Physics.Raycast(hit, out raycastHit, float.MaxValue, solidMouse))
+        {
+            lineRenderer.GetComponent<LineRenderer>().SetPosition(1, new Vector3(raycastHit.point.x, raycastHit.point.y, 0));
+        }
     }
 
     private void AxisInput()
@@ -28,10 +41,12 @@ public class ParasiteJump : MonoBehaviour
             Time.fixedDeltaTime *= Time.timeScale;
 
             ready = true;
+
+            lineRenderer.SetActive(true);
         }
         if (Input.GetMouseButtonUp(1) && ready == true) /*Совершаем рывок*/
         {
-            hit = Camera.main.ScreenPointToRay(Input.mousePosition);
+            lineRenderer.SetActive(false);
 
             Time.timeScale = 1;
 
