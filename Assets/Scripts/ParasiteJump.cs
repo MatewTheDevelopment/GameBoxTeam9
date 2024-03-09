@@ -26,7 +26,7 @@ public class ParasiteJump : MonoBehaviour
 
         if (Physics.Raycast(hit, out raycastHit, float.MaxValue, solidMouse))
         {
-            lineRenderer.GetComponent<LineRenderer>().SetPosition(1, new Vector3(raycastHit.point.x, raycastHit.point.y, 0));
+            lineRenderer.GetComponent<LineRenderer>().SetPosition(1, new Vector3(raycastHit.point.x, raycastHit.point.y, transform.position.z));
         }
     }
 
@@ -58,7 +58,7 @@ public class ParasiteJump : MonoBehaviour
             {
                 RaycastHit raycast;
 
-                Vector3 jumpPoint = new Vector3(hitInfo.point.x, hitInfo.point.y, 0);
+                Vector3 jumpPoint = new Vector3(hitInfo.point.x, hitInfo.point.y, transform.position.z);
 
                 if (Physics.Raycast(transform.position, jumpPoint - transform.position, out raycast, jumpDistance, solidPlayer))
                 {
